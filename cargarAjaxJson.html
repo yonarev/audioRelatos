@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carga con Ajax</title>
+    <style>
+        button{
+            font-size: 5vw;
+        }
+    </style>
+</head>
+<body>
+    <button onclick=" cargarJson()">Cargar relatos json</button>
+    <script>
+        function cargarJson() {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    var data = JSON.parse(xhr.responseText);
+                    localStorage.setItem('relatos', JSON.stringify(data));
+                    console.log('Datos cargados en el almacenamiento local:', data);
+                    alert('Datos cargados en el almacenamiento local:', data);
+                } else {
+                    console.error('Error al obtener el archivo JSON. Código de estado:', xhr.status);
+                    alert('Error al obtener el archivo JSON. Código de estado:', xhr.status);
+                }
+                }
+            };
+            xhr.open('GET', './cargaJson.php', true);
+            xhr.send();
+        }
+    </script>
+</body>
+</html>

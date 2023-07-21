@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Guardar datos de localStorage con PHP utilizando fetch</title>
+  <style>
+    button{
+        font-size: 5vw;
+    }
+  </style>
+</head>
+<body>
+  <h1>Guardar datos de localStorage con PHP utilizando fetch</h1>
+  <button onClick="guardarDatos()">Graba archivo relatos json</button>
+  <script>
+    // Función para guardar los datos de localStorage en el servidor
+    function guardarDatos() {
+      // Obtener los datos de localStorage
+      var relatos = JSON.parse(localStorage.getItem('relatos')) || [];
+      // Configurar la solicitud fetch
+      fetch('./grabaJson.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(relatos)
+      })
+      .then(function(response) {
+        if (response.ok) {
+          console.log('Los datos se han guardado correctamente.');
+          alert('Los datos se han guardado correctamente.');
+        } else {
+          console.error('Error al guardar los datos.');
+          alert('Error al guardar los datos.');
+        }
+      })
+      .catch(function(error) {
+        console.error('Error en la solicitud:', error);
+        alert('Error en la solicitud.');
+      });
+    }
+   
+  </script>
+</body>
+</html>
